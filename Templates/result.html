@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <center><h1>Quiz Results</h1></center>
+        <center><p>Your score: {{ score }} / {{ total }} ({{ score / total * 100 }}%)</p></center>
+        <h3>Feedback:</h3>
+        {% for fb in feedback %}
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ fb.question }}</h5>
+                {% if fb.correct %}
+                    <div class="alert alert-success" role="alert">
+                        Correct! Your answer: {{ fb.answer }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                        Incorrect! Your answer: {{ fb.answer }}. Correct answer: {{ fb.explanation }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        <a href="/" class="btn btn-primary mt-3">Take Another Quiz</a>
+    </div>
+</body>
+</html>

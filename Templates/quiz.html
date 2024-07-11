@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+       <center> <h1>Quiz</h1></center>
+        <form action="/quiz" method="post">
+            {% for question in quiz_data %}
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ question.question }}</h5>
+                    <div class="form-group">
+                        {% for option in question.options %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="{{ question.question }}" id="{{ option }}" value="{{ option }}">
+                            <label class="form-check-label" for="{{ option }}">{{ option }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <center><button type="submit" class="btn btn-primary mt-3">Submit Quiz</button></center>
+        </form>
+    </div>
+
+    <!-- Countdown timer script -->
+    <script>
+        var timeLeft = 60; // Time in seconds for each question
+        var timerElement = document.createElement('div');
+        timerElement.classList.add('timer');
+        timerElement.textContent = 'Time left: ' + timeLeft + 's';
+
+        function countdown() {
+            setInterval(function() {
+                timeLeft--;
+                timerElement.textContent = 'Time left: ' + timeLeft + 's';
+
+                if (timeLeft <= 0) {
+                    document.querySelector('form').submit(); // Auto-submit form on timeout
+                }
+            }, 1000);
+        }
+
+        // Start countdown when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            countdown();
+            document.body.appendChild(timerElement);
+        });
+    </script>
+</body>
+</html>
